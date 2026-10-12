@@ -52,36 +52,38 @@ A aplicação liga-se diretamente às contas Steam dos jogadores, cruza as bibli
 Para correres este projeto na tua máquina, vais precisar de ter o Node.js instalado.
 
 ### 1. Clonar o repositório
-\`\`\`bash
-git clone https://github.com/o-teu-username/gamematch.git
+```
+bash
+git clone https://github.com/framiao/GameMatch.git
 cd gamematch
-\`\`\`
+```
 
 ### 2. Configurar Variáveis de Ambiente (Backend)
-Na pasta \`/backend\`, cria um ficheiro chamado \`.env\` e adiciona as tuas chaves de API:
+Na pasta `backend`, cria um ficheiro chamado `.env` e adiciona as tuas chaves de API:
 
-\`\`\`env
+```env
 STEAM_API_KEY=tua_chave_steam_aqui
 MONGODB_URI=tua_connection_string_do_mongodb_atlas
 RAWG_API_KEY=tua_chave_rawg_aqui
-\`\`\`
+```
 
 ### 3. Iniciar o Backend
 Abre um terminal, navega para a pasta do backend e inicia o servidor:
 
-\`\`\`bash
+```
+bash
 cd backend
 npm install
 node index.js
-\`\`\`
+```
 *(Deverás ver no terminal: "🚀 Servidor Node.js a correr na porta 5000" e "🟢 Sucesso: Ligado ao MongoDB Atlas!")*
 
 ### 4. Iniciar o Frontend
 Abre um segundo terminal, navega para a pasta do frontend e arranca o Vite:
 
-\`\`\`bash
+```bash
 cd frontend
 npm install
 npm run dev
-\`\`\`
+```
 *(O Frontend ficará disponível em http://localhost:5173)*
