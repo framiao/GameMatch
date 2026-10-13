@@ -65,6 +65,8 @@ Na pasta `backend`, cria um ficheiro chamado `.env` e adiciona as tuas chaves de
 STEAM_API_KEY=tua_chave_steam_aqui
 MONGODB_URI=tua_connection_string_do_mongodb_atlas
 RAWG_API_KEY=tua_chave_rawg_aqui
+FRONTEND_URL=http://localhost:5173
+BACKEND_URL=http://localhost:5000
 ```
 
 ### 3. Iniciar o Backend
@@ -78,7 +80,14 @@ node index.js
 ```
 *(Deverás ver no terminal: "🚀 Servidor Node.js a correr na porta 5000" e "🟢 Sucesso: Ligado ao MongoDB Atlas!")*
 
-### 4. Iniciar o Frontend
+### 4. Configurar Variáveis de Ambiente (Frontend)
+Na pasta `frontend`, cria um ficheiro chamado `.env` e adiciona as tuas chaves de API:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+### 5. Iniciar o Frontend
 Abre um segundo terminal, navega para a pasta do frontend e arranca o Vite:
 
 ```bash

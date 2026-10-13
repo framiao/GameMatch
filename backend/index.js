@@ -18,13 +18,15 @@ const Session = require('./models/Session');
 // ==========================================
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
 const MONGO_URI = process.env.MONGODB_URI;
+const FRONTEND_URL = process.env.FRONTEND_URL;
+const BACKEND_URL = process.env.BACKEND_URL;
 const PORTA = 5000;
 
 const app = express();
 
 // Configuração de CORS (Essencial para Cookies de Autenticação cruzarem domínios)
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: FRONTEND_URL,
     credentials: true 
 }));
 app.use(express.json());
@@ -46,8 +48,8 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
 passport.use(new SteamStrategy({
-    returnURL: 'http://localhost:5000/api/auth/steam/return',
-    realm: 'http://localhost:5000/',
+    returnURL: `${BACKEND_URL}/api/auth/steam/return`,
+    realm: `${BACKEND_URL}/`,
     apiKey: STEAM_API_KEY
   },
   function(identifier, profile, done) {
@@ -132,12 +134,12 @@ async function getPlayerDetails(playerId, isGuest, fallbackName) {
 // ==========================================
 
 /** Redireciona o utilizador para a página oficial de Login da Steam */
-app.get('/api/auth/steam', passport.authenticate('steam', { failureRedirect: 'http://localhost:5173/' }));
+app.get('/api/auth/steam', passport.authenticate('steam', { failureRedirect: FRONTEND_URL }));
 
 /** Rota de retorno após sucesso no Login da Steam. Redireciona para o Frontend. */
 app.get('/api/auth/steam/return', 
-    passport.authenticate('steam', { failureRedirect: 'http://localhost:5173/' }), 
-    (req, res) => res.redirect('http://localhost:5173/')
+    passport.authenticate('steam', { failureRedirect: FRONTEND_URL }), 
+    (req, res) => res.redirect(FRONTEND_URL)
 );
 
 /** Verifica se a sessão atual está autenticada e devolve os dados básicos do utilizador. */

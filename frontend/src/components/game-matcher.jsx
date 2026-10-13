@@ -60,7 +60,7 @@ export function GameMatcher({ sessionInfo, onLeave, onReset }) {
 
   /** Emite um Reset ao Servidor para limpar os likes e recomeçar. */
   const handlePlayAgain = async () => {
-      await fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}/reset`, { method: 'POST' });
+      await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}/reset`, { method: 'POST' });
   };
   
   const playSwipeSound = () => {
@@ -77,7 +77,7 @@ export function GameMatcher({ sessionInfo, onLeave, onReset }) {
 
   // Carregamento inicial e cruzamento de jogos
   useEffect(() => {
-    fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}/games`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}/games`)
       .then(resposta => resposta.json())
       .then(dados => {
         if (dados.erro) {
@@ -109,7 +109,7 @@ export function GameMatcher({ sessionInfo, onLeave, onReset }) {
 
     const checkMatches = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}`);
             const data = await res.json();
 
             setIsHost(data.hostId === sessionInfo.playerId);
@@ -157,7 +157,7 @@ export function GameMatcher({ sessionInfo, onLeave, onReset }) {
 
     if (direction === 'right') {
         try {
-            const res = await fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}/like`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}/like`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playerId: sessionInfo.playerId, gameId: currentGame.id })
@@ -177,7 +177,7 @@ export function GameMatcher({ sessionInfo, onLeave, onReset }) {
       setIndex(nextIndex);
       
       if (nextIndex >= games.length) {
-          fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}/finish`, {
+          fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}/finish`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ playerId: sessionInfo.playerId })

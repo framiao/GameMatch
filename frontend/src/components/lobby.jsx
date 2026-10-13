@@ -21,7 +21,7 @@ export function Lobby({ onJoinRoom }) {
 
   // Verifica se o utilizador já tem um cookie de sessão válido do backend
   useEffect(() => {
-    fetch('http://localhost:5000/api/auth/user', { credentials: 'include' })
+    fetch(`${import.meta.env.VITE_API_URL}/api/auth/user`, { credentials: 'include' })
       .then(res => {
           if (!res.ok) throw new Error('Não autenticado');
           return res.json();
@@ -38,12 +38,12 @@ export function Lobby({ onJoinRoom }) {
 
   /** Redireciona para o portal seguro de autenticação da Valve/Steam. */
   const handleSteamLogin = () => {
-    window.location.href = 'http://localhost:5000/api/auth/steam';
+    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/steam`;
   };
 
   /** Termina a sessão autenticada atual. */
   const handleLogout = async () => {
-    await fetch('http://localhost:5000/api/auth/logout', { method: 'POST', credentials: 'include' });
+    await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
     setSteamUser(null);
   };
 
@@ -63,7 +63,7 @@ export function Lobby({ onJoinRoom }) {
           isGuest: isGuest
       };
 
-      const resposta = await fetch("http://localhost:5000/api/sessions/create", {
+      const resposta = await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -102,7 +102,7 @@ export function Lobby({ onJoinRoom }) {
           isGuest: isGuest
       };
 
-      const resposta = await fetch(`http://localhost:5000/api/sessions/join`, {
+      const resposta = await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/join`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

@@ -34,7 +34,7 @@ export function WaitingRoom({ sessionInfo, onStart, onLeave }) {
   useEffect(() => {
     const fetchRoomState = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}`);
         if (res.ok) {
           const data = await res.json();
           setPlayers(data.players);
@@ -66,7 +66,7 @@ export function WaitingRoom({ sessionInfo, onStart, onLeave }) {
     const delaySearch = setTimeout(async () => {
       setIsSearching(true);
       try {
-        const res = await fetch(`http://localhost:5000/api/search-games?q=${customGameName}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/search-games?q=${customGameName}`);
         const data = await res.json();
         setSearchResults(data);
       } catch (err) {
@@ -87,7 +87,7 @@ export function WaitingRoom({ sessionInfo, onStart, onLeave }) {
   /** Altera o estado do servidor para "playing", o que despoleta o onStart em todos os clientes. */
   const handleHostStart = async () => {
     setStarting(true);
-    fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}/start`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}/start`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ playerId: sessionInfo.playerId })
@@ -106,7 +106,7 @@ export function WaitingRoom({ sessionInfo, onStart, onLeave }) {
       };
 
       try {
-          await fetch(`http://localhost:5000/api/sessions/${sessionInfo.roomCode}/add-game`, {
+          await fetch(`${import.meta.env.VITE_API_URL}/api/sessions/${sessionInfo.roomCode}/add-game`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ game: novoJogo })
