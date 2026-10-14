@@ -31,11 +31,20 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Configuração de Sessão em Memória (Necessário para o Passport)
+app.set('trust proxy', 1);
+
+// Se o URL NÃO contiver a palavra 'localhost', sabemos que estamos no Render
+const isProduction = !BACKEND_URL.includes('localhost');
+
 app.use(session({
     secret: 'chave-super-secreta-do-gamematch-2026',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        secure: isProduction,                     // 'true' no Render, 'false' no teu PC
+        sameSite: isProduction ? 'none' : 'lax',  // 'none' no Render, 'lax' no teu PC
+        maxAge: 24 * 60 * 60 * 1000
+    }
 }));
 
 // ==========================================
